@@ -17,12 +17,12 @@ const config = {
  * @returns Promise | la promesse qui peut se resoudre (then) ou échouer (catch)
  */
 // async / await permet d'utiliser les promèsse JS sans récourir à des fonction callback
-export const getPopulars = async () => {
+export const getPopulars = async (currentPage) => {
   // Gestion des exceptions dans un try/catch
   try {
     // On démarre la requête
     const request = await fetch(
-      `${API_BASE_URL}/popular?api_key=${API_KEY}`,
+      `${API_BASE_URL}/popular?api_key=${API_KEY}&page=${currentPage}`,
       config,
     );
     // On traite la reponse réçu pour en extraire le corps sous la forme d'un objet json
@@ -31,3 +31,5 @@ export const getPopulars = async () => {
     console.log(error.message);
   }
 };
+
+export const getImagePath = path => `${IMAGE_BASE_URL}${path}`;

@@ -4,9 +4,11 @@ import {
   ActivityIndicator,
   FlatList,
   StyleSheet,
+  Image,
+  Dimensions,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {getPopulars} from '../services/tmdbApi';
+import {getImagePath, getPopulars} from '../services/tmdbApi';
 
 export default function HomeScreen() {
   // state des films
@@ -33,21 +35,48 @@ export default function HomeScreen() {
 
   const renderItem = ({item}) => (
     <View style={styles.itemWrapper}>
-      <Text>{item.title}</Text>
+      <Image
+        style={styles.poster}
+        source={{uri: getImagePath(item.poster_path)}}
+        resizeMode="contain"
+      />
+      <Text style={styles.itemTitle}>{item.title}</Text>
     </View>
   );
+
   return loading ? (
     <ActivityIndicator />
   ) : (
-    <FlatList
-      data={films}
-      renderItem={renderItem}
-      keyExtractor={item => item.id}
-    />
+    <>
+      <Text style={styles.title}>Films populaires</Text>
+      <FlatList
+        data={films}
+        numColumns={2}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
+    </>
   );
 }
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginHorizontal: 3,
+    marginVertical: 5,
+    textTransform: 'uppercase',
+  },
   itemWrapper: {
-    backgroundColor: 'darkblue',
+    backgroundColor: '#1F1B24',
+    flex: 1,
+    margin: 2,
+    elevation: 2,
+  },
+  poster: {
+    height: Dimensions.get('screen').height / 3,
+  },
+  itemTitle: {
+    fontSize: 16,
+    padding: 1,
   },
 });
