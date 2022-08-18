@@ -4,7 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import HomeStack from './HomeStack';
-import FavoriesScreen from './../screens/FavoritesScreen'
+import FavoritesScreen from './../screens/FavoritesScreen'
 
 const Tab = createBottomTabNavigator();
 export default function TabNavigation() {
@@ -15,11 +15,9 @@ export default function TabNavigation() {
           let iconName;
 
           if (route.name === 'Home') {
-            iconName = focused
-              ? 'ios-information-circle'
-              : 'ios-information-circle-outline';
-          } else if (route.name === 'Settings') {
-            iconName = focused ? 'ios-list-box' : 'ios-list';
+            iconName = focused ? 'md-home' : 'md-home-outline';
+          } else if (route.name === 'Favorites') {
+            iconName = focused ? 'md-bookmark' : 'md-bookmark-outline';
           }
 
           // You can return any component that you like here!
@@ -35,7 +33,7 @@ export default function TabNavigation() {
         },
       })}>
       <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="Favories" component={FavoriesScreen} />
+      <Tab.Screen name="Favorites" component={FavoritesScreen} />
     </Tab.Navigator>
   );
 }

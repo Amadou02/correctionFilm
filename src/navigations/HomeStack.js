@@ -5,14 +5,12 @@ import DetailsScreen from './../screens/DetailsScreen';
 const Stack = createNativeStackNavigator();
 export default function HomeStack() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="HomeScreen"
-        component={HomeScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="Details" component={DetailsScreen} />
     </Stack.Navigator>
   );
