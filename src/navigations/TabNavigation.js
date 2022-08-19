@@ -4,7 +4,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import HomeStack from './HomeStack';
-import FavoritesScreen from './../screens/FavoritesScreen'
+import FavoritesScreen from './../screens/FavoritesScreen';
+import {SearchBar} from 'react-native-screens';
 
 const Tab = createBottomTabNavigator();
 export default function TabNavigation() {
@@ -33,6 +34,7 @@ export default function TabNavigation() {
         },
       })}>
       <Tab.Screen name="Home" component={HomeStack} />
+      <Tab.Screen name="Search" component={SearchBar} />
       <Tab.Screen name="Favorites" component={FavoritesScreen} />
     </Tab.Navigator>
   );

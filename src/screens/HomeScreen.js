@@ -12,6 +12,9 @@ import React, {useEffect, useState} from 'react';
 import {getImagePath, getPopulars} from '../services/tmdbApi';
 import {useNavigation} from '@react-navigation/native';
 
+import {useSelector} from 'react-redux';
+import IonIcons from 'react-native-vector-icons/Ionicons';
+
 const IMAGE_SIZE = Dimensions.get('screen').height / 3;
 
 export default function HomeScreen() {
@@ -25,7 +28,8 @@ export default function HomeScreen() {
 
   // state pour la pagination, initialisé pour demarrer à page 1
   const [currentPage, setCurrentPage] = useState(1);
-  // ref pour la valeur à animer
+  // On recupère le contenu du store
+  const favorites = useSelector(state => state.favorites);
 
   // Attention : il ne faut pas utiliser la function callback de useEffect en async/await
   useEffect(() => {
@@ -46,17 +50,30 @@ export default function HomeScreen() {
   }, [currentPage]);
 
   const renderItem = ({item}) => {
+    const isInFavorite =
+      favorites.findIndex(favorite => favorite.id === item.id) !== -1;
     return (
       <View style={styles.itemWrapper}>
         {/* on navigue vers la page d'un film dt l'id est passé en paramètre de route */}
         <TouchableOpacity
-          onPress={() => navigation.navigate('Details', {id: item.id})}>
+          onPress={() =>
+            navigation.navigate('Details', {id: item.id})
+          }>
           <Image
             style={styles.poster}
             source={{uri: getImagePath(item.poster_path)}}
             resizeMode="contain"
           />
           <Text style={styles.itemTitle}>{item.title}</Text>
+          {/* on ajoute l'icone aux films fav */}
+          {isInFavorite  && (
+            <IonIcons
+              style={styles.likeIcon}
+              name="md-bookmark"
+              size={30}
+              color={'red'}
+            />
+          )}
         </TouchableOpacity>
       </View>
     );
@@ -111,5 +128,12 @@ const styles = StyleSheet.create({
   },
   loaderContainer: {
     marginVertical: 10,
+  },
+  likeIcon: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    marginTop: -4,
+    color: 'red',
   },
 });

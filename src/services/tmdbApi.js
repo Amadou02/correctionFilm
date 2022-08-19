@@ -37,7 +37,7 @@ export const getFilm = async id => {
   try {
     // On démarre la requête
     const request = await fetch(
-      `${API_BASE_URL}/${id}?api_key=${API_KEY}`,
+      `${API_BASE_URL}/${id}?api_key=${API_KEY}&append_to_response=similar`,
       config,
     );
     // On traite la reponse réçu pour en extraire le corps sous la forme d'un objet json
